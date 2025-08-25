@@ -1,0 +1,83 @@
+# Example Git Waybar Monitor Configuration
+# Copy this file to ~/.config/git-waybar/config.yaml and customize
+
+# Basic configuration - minimal setup
+update_interval: 30
+
+repositories:
+  - ~/Documents/my-project
+  - ~/work/team-project
+  - ~/dotfiles
+
+# That's it! The above is all you need for basic functionality.
+# Everything below is optional customization.
+
+# ============================================================
+# OPTIONAL: Customize colors to match your theme
+# ============================================================
+colors:
+  clean: "#50fa7b"           # Dracula green
+  uncommitted: "#ff5555"      # Dracula red
+  untracked: "#ffb86c"        # Dracula orange
+  unpushed: "#f1fa8c"         # Dracula yellow
+  upstream_available: "#8be9fd"  # Dracula cyan
+  multiple: "#bd93f9"         # Dracula purple
+  error: "#6272a4"            # Dracula comment
+
+# ============================================================
+# OPTIONAL: Terminal configuration
+# ============================================================
+# Use a specific terminal
+terminal: alacritty
+
+# Or use a custom command
+# terminal_command: "wezterm start --cwd {path}"
+
+# ============================================================
+# OPTIONAL: Dropdown configuration
+# ============================================================
+dropdown_launcher: wofi  # Use wofi instead of rofi
+
+dropdown:
+  max_items: 10          # Show only 10 repositories
+  show_full_path: true   # Show /home/user/project instead of just "project"
+  sort_by: status        # Sort by status severity
+
+# ============================================================
+# OPTIONAL: Authentication for better upstream detection
+# ============================================================
+auth:
+  enable_fetch: true     # Enable fetching (required for upstream detection)
+  fetch_timeout: 10      # Give slow connections more time
+  use_gh_cli: true       # Use gh CLI for GitHub repos
+  use_ssh_agent: true    # Use SSH agent for SSH remotes
+
+# ============================================================
+# OPTIONAL: Debugging
+# ============================================================
+logging:
+  level: DEBUG           # Show detailed logs
+  console: true          # Print logs to console
+  file: /tmp/git-waybar.log  # Custom log location
+
+# ============================================================
+# OPTIONAL: Performance tuning
+# ============================================================
+advanced:
+  cache_duration: 10     # Cache results for 10 seconds
+  parallel_checks: 8     # Check 8 repos at once (if you have many)
+  ignore_patterns:       # Ignore these when checking for changes
+    - "*.log"
+    - "*.tmp"
+    - "node_modules/"
+    - "__pycache__/"
+
+# ============================================================
+# OPTIONAL: Desktop notifications
+# ============================================================
+notifications:
+  enabled: true
+  notify_on:
+    - uncommitted        # Notify when uncommitted changes detected
+    - error              # Notify on errors
+  cooldown: 600          # Don't repeat notifications for 10 minutes

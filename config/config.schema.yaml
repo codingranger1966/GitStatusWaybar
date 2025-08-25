@@ -1,0 +1,194 @@
+# Configuration Schema Documentation
+# This file documents the configuration structure for Git Waybar Monitor
+
+type: object
+required:
+  - repositories
+properties:
+  update_interval:
+    type: integer
+    minimum: 1
+    maximum: 3600
+    default: 30
+    description: "How often to check repository status in seconds"
+  
+  repositories:
+    type: array
+    items:
+      type: string
+      pattern: "^[~./].*"
+    minItems: 0
+    description: "List of repository paths to monitor"
+  
+  colors:
+    type: object
+    properties:
+      clean:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#50fa7b"
+      uncommitted:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#ff5555"
+      untracked:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#ffb86c"
+      unpushed:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#f1fa8c"
+      upstream_available:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#8be9fd"
+      multiple:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#bd93f9"
+      error:
+        type: string
+        pattern: "^#[0-9a-fA-F]{6}$"
+        default: "#6272a4"
+    description: "Color codes for different repository statuses"
+  
+  terminal:
+    type: string
+    enum:
+      - gnome-terminal
+      - konsole
+      - alacritty
+      - kitty
+      - xterm
+      - wezterm
+      - foot
+    default: gnome-terminal
+    description: "Terminal emulator to use"
+  
+  terminal_command:
+    type: string
+    description: "Custom terminal command with {path} placeholder"
+  
+  dropdown_launcher:
+    type: string
+    enum:
+      - rofi
+      - wofi
+    default: rofi
+    description: "Launcher to use for dropdown menu"
+  
+  dropdown:
+    type: object
+    properties:
+      max_items:
+        type: integer
+        minimum: 0
+        default: 20
+        description: "Maximum items to show in dropdown (0 = unlimited)"
+      show_full_path:
+        type: boolean
+        default: false
+        description: "Show full repository path or just name"
+      sort_by:
+        type: string
+        enum:
+          - alphabetical
+          - status
+          - modified
+        default: alphabetical
+        description: "How to sort repositories in dropdown"
+  
+  auth:
+    type: object
+    properties:
+      enable_fetch:
+        type: boolean
+        default: true
+        description: "Enable git fetch for upstream checking"
+      fetch_timeout:
+        type: integer
+        minimum: 1
+        maximum: 60
+        default: 5
+        description: "Timeout for git fetch operations in seconds"
+      use_gh_cli:
+        type: boolean
+        default: true
+        description: "Use GitHub CLI for authentication when available"
+      use_ssh_agent:
+        type: boolean
+        default: true
+        description: "Use SSH agent for authentication when available"
+  
+  logging:
+    type: object
+    properties:
+      level:
+        type: string
+        enum:
+          - DEBUG
+          - INFO
+          - WARNING
+          - ERROR
+          - CRITICAL
+        default: INFO
+        description: "Logging level"
+      file:
+        type: string
+        description: "Log file path (empty for default)"
+      console:
+        type: boolean
+        default: false
+        description: "Enable console logging"
+  
+  advanced:
+    type: object
+    properties:
+      cache_duration:
+        type: integer
+        minimum: 0
+        maximum: 60
+        default: 5
+        description: "Cache duration in seconds"
+      parallel_checks:
+        type: integer
+        minimum: 1
+        maximum: 10
+        default: 4
+        description: "Number of parallel repository checks"
+      ignore_patterns:
+        type: array
+        items:
+          type: string
+        description: "Patterns to ignore when checking for changes"
+  
+  notifications:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        default: false
+        description: "Enable desktop notifications"
+      notify_on:
+        type: array
+        items:
+          type: string
+          enum:
+            - clean
+            - uncommitted
+            - untracked
+            - unpushed
+            - upstream_available
+            - multiple
+            - error
+        default:
+          - uncommitted
+          - error
+        description: "Statuses that trigger notifications"
+      cooldown:
+        type: integer
+        minimum: 0
+        maximum: 3600
+        default: 300
+        description: "Notification cooldown period in seconds"
