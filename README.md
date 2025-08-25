@@ -50,4 +50,4 @@ Run tests:
 cd ~/Projects/GitStatusWaybar
 source venv/bin/activate
 pytest
-```
+```# Test change
