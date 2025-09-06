@@ -19,6 +19,18 @@ try:
     size = display_config.get('size', 'medium')
     bold = display_config.get('bold', True)
     
+    # Get color configuration
+    colors_config = config.get('colors', {})
+    colors = {
+        'clean': colors_config.get('clean', '#50fa7b'),
+        'uncommitted': colors_config.get('uncommitted', '#ff5555'),
+        'untracked': colors_config.get('untracked', '#ffb86c'),
+        'unpushed': colors_config.get('unpushed', '#f1fa8c'),
+        'upstream': colors_config.get('upstream_available', '#8be9fd'),
+        'multiple': colors_config.get('multiple', '#bd93f9'),
+        'error': colors_config.get('error', '#6272a4')
+    }
+    
     # Convert size to CSS values
     if size == 'small':
         font_size = '12px'
@@ -45,7 +57,7 @@ try:
     
     font_weight = 'bold' if bold else 'normal'
     
-    # Generate CSS
+    # Generate CSS using configured colors
     css_content = f"""
 #custom-git-monitor {{
   min-width: {min_width};
@@ -56,73 +68,86 @@ try:
 }}
 
 #custom-git-monitor.clean {{
-  color: #50fa7b;
+  color: {colors['clean']};
 }}
 
 #custom-git-monitor.uncommitted {{
-  color: #ff5555;
+  color: {colors['uncommitted']};
 }}
 
 #custom-git-monitor.untracked {{
-  color: #ffb86c;
+  color: {colors['untracked']};
 }}
 
 #custom-git-monitor.unpushed {{
-  color: #f1fa8c;
+  color: {colors['unpushed']};
 }}
 
 #custom-git-monitor.upstream {{
-  color: #8be9fd;
+  color: {colors['upstream']};
 }}
 
 #custom-git-monitor.multiple {{
-  color: #bd93f9;
+  color: {colors['multiple']};
 }}
 
 #custom-git-monitor.error {{
-  color: #6272a4;
+  color: {colors['error']};
 }}
 """
     
-    print(f"/* Git Monitor CSS - Size: {size}, Bold: {bold} */{css_content}")
+    print(f"/* Git Monitor CSS - Size: {size}, Bold: {bold}, Colors: configured */{css_content}")
     
 except Exception as e:
-    # Output error and use default CSS
+    # Output error and use default CSS with fallback colors
     print(f"/* Error loading config: {e} - using defaults */")
-    print("""
-#custom-git-monitor {
-  min-width: 24px;
+    
+    # Default colors (same as config defaults)
+    default_colors = {
+        'clean': '#50fa7b',
+        'uncommitted': '#ff5555', 
+        'untracked': '#ffb86c',
+        'unpushed': '#f1fa8c',
+        'upstream': '#8be9fd',
+        'multiple': '#bd93f9',
+        'error': '#6272a4'
+    }
+    
+    fallback_css = f"""
+#custom-git-monitor {{
+  min-width: 20px;
   margin: 0 7.5px;
-  padding: 0 6px;
+  padding: 0 2px;
   font-size: 16px;
   font-weight: bold;
-}
+}}
 
-#custom-git-monitor.clean {
-  color: #50fa7b;
-}
+#custom-git-monitor.clean {{
+  color: {default_colors['clean']};
+}}
 
-#custom-git-monitor.uncommitted {
-  color: #ff5555;
-}
+#custom-git-monitor.uncommitted {{
+  color: {default_colors['uncommitted']};
+}}
 
-#custom-git-monitor.untracked {
-  color: #ffb86c;
-}
+#custom-git-monitor.untracked {{
+  color: {default_colors['untracked']};
+}}
 
-#custom-git-monitor.unpushed {
-  color: #f1fa8c;
-}
+#custom-git-monitor.unpushed {{
+  color: {default_colors['unpushed']};
+}}
 
-#custom-git-monitor.upstream {
-  color: #8be9fd;
-}
+#custom-git-monitor.upstream {{
+  color: {default_colors['upstream']};
+}}
 
-#custom-git-monitor.multiple {
-  color: #bd93f9;
-}
+#custom-git-monitor.multiple {{
+  color: {default_colors['multiple']};
+}}
 
-#custom-git-monitor.error {
-  color: #6272a4;
-}
-""")
+#custom-git-monitor.error {{
+  color: {default_colors['error']};
+}}
+"""
+    print(fallback_css)

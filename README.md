@@ -194,11 +194,21 @@ auth:
 
 ## Customization
 
-### Change Display Size
+### Change Display Size or Colors
 ```bash
-# Edit config.yaml, then update styles:
+# Edit ~/.config/git-waybar/config.yaml, then update styles:
 ~/.config/waybar/scripts/update-git-styles.sh
 killall waybar && waybar &
+```
+
+**Example color customization:**
+```yaml
+colors:
+  uncommitted: "#ff0000"      # Bright red
+  untracked: "#ffa500"        # Orange  
+  unpushed: "#ffff00"         # Yellow
+  upstream_available: "#00ffff" # Cyan
+  multiple: "#ff00ff"         # Magenta
 ```
 
 ### Custom Terminal
