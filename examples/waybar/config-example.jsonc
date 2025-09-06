@@ -1,0 +1,17 @@
+{
+  // Example waybar configuration showing how to integrate the git monitor
+  // Add this to your ~/.config/waybar/config.jsonc
+  
+  "modules-right": [
+    "custom/git-monitor",
+    // ... your other modules
+  ],
+  
+  "custom/git-monitor": {
+    "exec": "/home/martin/.config/waybar/scripts/git-status-oneshot-wrapper.sh",
+    "return-type": "json",
+    "interval": 30,
+    "tooltip": false,
+    "on-click": "/home/martin/.config/waybar/scripts/git-dropdown-wrapper.py"
+  }
+}

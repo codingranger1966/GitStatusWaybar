@@ -1,0 +1,39 @@
+/* Example CSS styles for git monitor widget */
+/* Add this to your ~/.config/waybar/style.css */
+
+/* Git Monitor CSS - Size: large, Bold: True */
+#custom-git-monitor {
+  min-width: 20px;
+  margin: 0 7.5px;
+  padding: 0 2px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#custom-git-monitor.clean {
+  color: #50fa7b;
+}
+
+#custom-git-monitor.uncommitted {
+  color: #ff5555;
+}
+
+#custom-git-monitor.untracked {
+  color: #ffb86c;
+}
+
+#custom-git-monitor.unpushed {
+  color: #f1fa8c;
+}
+
+#custom-git-monitor.upstream {
+  color: #8be9fd;
+}
+
+#custom-git-monitor.multiple {
+  color: #bd93f9;
+}
+
+#custom-git-monitor.error {
+  color: #6272a4;
+}
