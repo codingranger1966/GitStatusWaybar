@@ -220,6 +220,53 @@ terminal: alacritty  # or kitty, gnome-terminal, konsole, etc.
 ### Custom Icons
 Edit the `icons` section in `config.yaml` to use your preferred symbols.
 
+## Uninstallation
+
+### Automatic Uninstall
+```bash
+cd GitStatusWaybar
+./uninstall.sh
+```
+
+The uninstall script will:
+- Remove all installed scripts from `~/.config/waybar/scripts/`
+- Optionally remove configuration files (asks first)
+- Optionally remove log files
+- Guide you through manual waybar config cleanup
+
+### Manual Uninstall
+
+If you prefer to uninstall manually:
+
+1. **Remove scripts:**
+   ```bash
+   rm ~/.config/waybar/scripts/git-*.py
+   rm ~/.config/waybar/scripts/git-*.sh
+   ```
+
+2. **Remove configuration (optional):**
+   ```bash
+   rm -rf ~/.config/git-waybar
+   ```
+
+3. **Remove logs (optional):**
+   ```bash
+   rm -rf ~/.local/share/git-waybar
+   ```
+
+4. **Clean waybar config:**
+   Edit `~/.config/waybar/config.jsonc` and remove:
+   - `"custom/git-monitor"` from modules list
+   - The entire `"custom/git-monitor"` configuration block
+
+5. **Clean waybar CSS:**
+   Remove all `#custom-git-monitor` rules from `~/.config/waybar/style.css`
+
+6. **Restart waybar:**
+   ```bash
+   killall waybar && waybar &
+   ```
+
 ## Troubleshooting
 
 **Widget not appearing:**
