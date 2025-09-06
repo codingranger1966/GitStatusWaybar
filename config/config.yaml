@@ -1,0 +1,123 @@
+# Git Waybar Monitor Configuration
+# This file configures which repositories to monitor and how the widget behaves
+
+# Update interval in seconds (how often to check repository status)
+# Default: 30
+update_interval: 3000
+
+# List of repository paths to monitor
+# Supports ~ for home directory expansion
+repositories:
+  - ~/Projects/GitStatusWaybar
+  # - ~/Projects/ObsidianLinker
+  # - ~/Documents/my-project
+  # - /opt/shared/team-repo
+
+# Color configuration for different statuses
+# These map to CSS classes in your Waybar style.css
+colors:
+  clean: "#50fa7b"           # Green - All repositories clean
+  uncommitted: "#ff5555"      # Red - Uncommitted changes
+  untracked: "#ffb86c"        # Orange - Untracked files
+  unpushed: "#f1fa8c"         # Yellow - Unpushed commits
+  upstream_available: "#8be9fd"  # Cyan - Upstream changes available
+  multiple: "#bd93f9"         # Purple - Multiple status types
+  error: "#6272a4"            # Gray - Error or invalid repository
+
+# Terminal emulator to use when clicking on a repository
+# Options: gnome-terminal, konsole, alacritty, kitty, xterm, or custom command
+# Use {path} as placeholder for repository path
+terminal: gnome-terminal
+# terminal_command: "alacritty --working-directory {path}"  # Custom command example
+
+# Dropdown launcher preference
+# Options: rofi, wofi
+dropdown_launcher: rofi
+
+# Dropdown configuration
+dropdown:
+  # Maximum number of repositories to show in dropdown (0 = unlimited)
+  max_items: 20
+  
+  # Show repository full path or just the name
+  show_full_path: false
+  
+  # Sort repositories in dropdown
+  # Options: alphabetical, status (by severity), modified (most recently modified first)
+  sort_by: alphabetical
+
+# Display configuration for waybar widget
+display:
+  # Size of the status indicator
+  # Options: small, medium, large, or custom pixel size (e.g., 18)
+  size: large
+  
+  # Whether to use bold font for the indicator
+  bold: true
+  
+  # Custom icon set (optional - uses default symbols if not specified)
+  icons:
+    clean: ""      # Empty when clean (widget disappears)
+    uncommitted: "●"  # Solid dot for uncommitted changes
+    untracked: "○"    # Open circle for untracked files
+    unpushed: "↑"     # Up arrow for unpushed commits
+    upstream: "↓"     # Down arrow for upstream changes
+    multiple: "!"     # Exclamation for multiple issues
+    error: "✗"        # X for errors
+
+# Authentication settings
+auth:
+  # Whether to attempt git fetch for upstream checking
+  # Set to false to disable all fetch operations (faster but no upstream detection)
+  enable_fetch: true
+  
+  # Fetch timeout in seconds
+  fetch_timeout: 5
+  
+  # Use GitHub CLI if available for GitHub repositories
+  use_gh_cli: true
+  
+  # Use SSH agent if available
+  use_ssh_agent: true
+
+# Logging configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO
+  
+  # Log file location (supports ~ expansion)
+  # Leave empty to use default: ~/.local/share/git-waybar/git-waybar.log
+  file: 
+  
+  # Enable console logging (useful for debugging)
+  console: false
+
+# Advanced settings
+advanced:
+  # Cache repository status for this many seconds
+  # Helps reduce CPU usage for large numbers of repositories
+  cache_duration: 5
+  
+  # Number of repositories to check in parallel
+  # Higher values = faster but more CPU usage
+  parallel_checks: 4
+  
+  # Ignore specific files/patterns when checking for changes
+  # Uses gitignore syntax
+  ignore_patterns:
+    # - "*.log"
+    # - "node_modules/"
+    # - ".env"
+
+# Notification settings (optional)
+notifications:
+  # Enable desktop notifications for repository status changes
+  enabled: false
+  
+  # Only notify for these statuses
+  notify_on:
+    - uncommitted
+    - error
+  
+  # Cooldown period in seconds (don't notify about the same repo repeatedly)
+  cooldown: 300
